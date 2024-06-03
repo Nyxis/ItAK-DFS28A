@@ -84,11 +84,11 @@ class Deck implements RandomTirage
     }
 }
 
-class GameMaster {
-    private $elements;
-
-    public function __construct($elements) {
-        $this->elements = $elements;
+class GameMaster 
+{
+    public function __construct(
+        private array $elements,
+    ) {
     }
 
     public function pleaseGiveMeACrit() {
