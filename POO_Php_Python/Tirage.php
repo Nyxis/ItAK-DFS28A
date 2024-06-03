@@ -93,7 +93,7 @@ class GameMaster {
 
     public function pleaseGiveMeACrit() {
         $element = $this->elements[array_rand($this->elements)];
-        $roll = $element->roll();
+        $roll = $element->lancer();
         return $this->calculateResult($roll);
     }
 
