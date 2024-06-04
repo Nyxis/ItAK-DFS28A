@@ -10,8 +10,6 @@ use App\JDR\Class\Deck;
 use App\JDR\Class\Piece;
 use App\JDR\Class\GameMaster;
 
-// var_dump(new De(0));die;
-
 $dice4 = new De(4);
 $dice10 = new De(10);
 $deck1 = new Deck(3, 18);
