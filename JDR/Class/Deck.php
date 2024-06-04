@@ -2,7 +2,6 @@
 
 namespace App\JDR\Class;
 
-use App\JDR\Exception\LancerException;
 use App\JDR\Interface\MaterielInterface;
 
 class Deck implements MaterielInterface
@@ -25,7 +24,7 @@ class Deck implements MaterielInterface
 
     public function isInvalid(){
         if($this->couleurs < 1 || $this->valeurs < 1) {
-            throw new LancerException("Le nombre de couleur et la valeur doivent être supérieurs ou égaux à 1");
+            return "Le nombre de couleur et la valeur doivent être supérieurs ou égaux à 1";
         }
         return false;
     }

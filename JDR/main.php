@@ -9,7 +9,7 @@ use App\JDR\Class\De;
 use App\JDR\Class\Deck;
 use App\JDR\Class\Piece;
 use App\JDR\Class\GameMaster;
-use App\JDR\Exception\LancerException;
+use InvalidArgumentException;
 
 $dice4 = new De(4);
 $dice10 = new De(10);
@@ -24,6 +24,6 @@ try {
 
     $result = $gm->pleaseGiveMeACrit();
     echo "Résultat : " . $result->getType();
-} catch (LancerException $th) {
+} catch (InvalidArgumentException $th) {
     echo $th->getMessage();
 }

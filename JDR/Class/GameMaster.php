@@ -3,7 +3,7 @@
 namespace App\JDR\Class;
 
 use App\JDR\Enum\TypeEnum;
-use App\JDR\Exception\LancerException;
+use InvalidArgumentException;
 
 class GameMaster 
 {
@@ -15,14 +15,13 @@ class GameMaster
     public function pleaseGiveMeACrit() {
         $element = $this->elements[array_rand($this->elements)];
         if($message = $element->isInvalid()){
-            throw new LancerException($message);
+            throw new InvalidArgumentException($message);
         }
-        $roll = $element->lancer() * $element->getMax() / 100;
+        $roll = 100 * $element->lancer() / $element->getMax();
         return $this->calculateResult($roll);
     }
 
     private function calculateResult($value) {
-
         switch($value) {
             case $value <= 5:
                 return new Tirage(TypeEnum::FUMBLE);

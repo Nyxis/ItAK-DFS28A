@@ -2,7 +2,6 @@
 
 namespace App\JDR\Class;
 
-use App\JDR\Exception\LancerException;
 use App\JDR\Interface\MaterielInterface;
 
 class De implements MaterielInterface
@@ -22,7 +21,7 @@ class De implements MaterielInterface
 
     public function isInvalid(){
         if($this->faces < 1) {
-            throw new LancerException("Un dé doit avoir au moins 1 face");
+            return "Un dé doit avoir au moins 1 face";
         }
         return false;
     }

@@ -2,7 +2,6 @@
 
 namespace App\JDR\Class;
 
-use App\JDR\Exception\LancerException;
 use App\JDR\Interface\MaterielInterface;
 
 class Piece implements MaterielInterface
@@ -17,16 +16,19 @@ class Piece implements MaterielInterface
     }
 
     public function lancer() {
-        if ($this->nbLancers == 0) {
+        return $this->lancerRecursive($this->nbLancers);
+    }
+
+    public function lancerRecursive(int $lancersRestants) {
+        if ($lancersRestants == 0) {
             return 1;
         }
-        $this->nbLancers--;
-        return rand(0, 1) * $this->lancer();
+        return rand(0, 1) * $this->lancerRecursive($lancersRestants-1);
     }
 
     public function isInvalid(){
         if($this->nbLancers < 1) {
-            throw new LancerException("Le nombre de lancer doit être supérieur ou égal à 1");
+            return "Le nombre de lancer doit être supérieur ou égal à 1";
         }
         return false;
     }
