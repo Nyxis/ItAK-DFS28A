@@ -26,4 +26,8 @@ class De implements MaterielInterface
         }
         return false;
     }
+
+    public function getMax() {
+        return $this->faces;
+    }
 }

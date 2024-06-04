@@ -30,4 +30,8 @@ class Piece implements MaterielInterface
         }
         return false;
     }
+
+    public function getMax() {
+        return $this->nbLancers;
+    }
 }

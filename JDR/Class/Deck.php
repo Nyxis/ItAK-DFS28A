@@ -29,4 +29,8 @@ class Deck implements MaterielInterface
         }
         return false;
     }
+
+    public function getMax() {
+        return $this->couleurs * $this->valeurs;
+    }
 }

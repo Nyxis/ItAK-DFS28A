@@ -17,21 +17,20 @@ class GameMaster
         if($message = $element->isInvalid()){
             throw new LancerException($message);
         }
-        $roll = $element->lancer();
+        $roll = $element->lancer() * $element->getMax() / 100;
         return $this->calculateResult($roll);
     }
 
     private function calculateResult($value) {
-        $percent = rand(1, 100);
 
-        switch($percent) {
-            case $percent <= 5:
+        switch($value) {
+            case $value <= 5:
                 return new Tirage(TypeEnum::FUMBLE);
                 break;
-            case $percent <= 20:
+            case $value <= 20:
                 return new Tirage(TypeEnum::CRITICAL_SUCCESS);
                 break;
-            case $percent <= 60:
+            case $value <= 60:
                 return new Tirage(TypeEnum::SUCCESS);
                 break;
             default:

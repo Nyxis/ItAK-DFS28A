@@ -5,4 +5,5 @@ namespace App\JDR\Interface;
 interface MaterielInterface {
     public function lancer();
     public function isInvalid();
+    public function getMax();
 }
