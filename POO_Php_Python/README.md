@@ -16,6 +16,12 @@ Cette valeur pourra être une réussite, un échec, une réussite critique ou un
 
 4/ Créez maintenant la méthode de tirage aléatoire pour chacun des éléments précédents. Selon l'élément, le statut du lancé doit être calculé à partir du résultat de la fonction aléatoire.
 
-4/ Créez maintenant une classe GameMaster.
+5/ Créez maintenant une classe GameMaster.
  - Un GameMaster dispose d'un nombre de dés conséquents de différents types, de deux decks de cartes l'un de trois couleurs de et 18 valeurs, le deuxième de 4 couleurs de 13 valeurs, et de deux pièces.
  - un GameMaster peut effectuer des tirages via la méthode `pleaseGiveMeACrit`. Le GameMaster sélectionne l'une des instances de Dice / Deck et Coin au hasard et renvoie une constante correspondant au type de résultat. Les valeurs de succès / critique / fumble sont pour le moment fixées à 40% / 15% / 5%.
+
+5/ Afin d'observer l'exécution de votre programme, proposez une implémentation d'une classe et d'une ou plusieurs méthodes pour écrire des messages dans la ligne de commande depuis vos classes, au lieu d'utiliser directement `echo` ou `var_dump`. L'implémentation devra permettre de choisir le comportement adéquat en fonction du contexte.
+Proposition : une fonction `log(string $message) : void` doit être ajoutée à chacune des classes.
+Attention : vous devez trouver un moyen d'utiliser cette classe dans vos objets sans pour autant le passer en paramètre à la construction.
+
+6/ Améliorez votre fichier d'amorçage (`main.php`) pour qu'il prenne en paramètre les taux de succès / critique / fumble pour cette exécution, et qu'il renvoie le résultat du lancer en code de retour.
