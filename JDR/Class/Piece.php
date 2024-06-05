@@ -3,9 +3,12 @@
 namespace App\JDR\Class;
 
 use App\JDR\Interface\MaterielInterface;
+use App\JDR\Trait\StringableTrait;
 
 class Piece implements MaterielInterface
 {
+    use StringableTrait;
+    
     public function __invoke(int $nbLancers) {
         return $nbLancers > 1;
     }

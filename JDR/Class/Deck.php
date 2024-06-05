@@ -3,9 +3,12 @@
 namespace App\JDR\Class;
 
 use App\JDR\Interface\MaterielInterface;
+use App\JDR\Trait\StringableTrait;
 
 class Deck implements MaterielInterface
 {
+    use StringableTrait;
+    
     public function __invoke(int $couleurs, int $valeurs) {
         return $couleurs > 1 && $valeurs > 1;
     }
