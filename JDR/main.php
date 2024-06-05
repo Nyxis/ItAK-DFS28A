@@ -9,7 +9,13 @@ use App\JDR\Class\GameMaster;
 use App\JDR\Class\Logger;
 use InvalidArgumentException;
 
-if (!$argc == 4) {
+$argv = [
+    ...array_filter($argv, function ($el) {
+        return is_numeric($el);
+    })
+];
+
+if (!count($argv) == 4) {
     Logger::log("Paramètres manquants, utilisation des valeurs par défaut");
     Logger::log("Utilisation avec les taux: php main.php <success_rate> <crit_rate> <fumble_rate>");
     
@@ -18,17 +24,11 @@ if (!$argc == 4) {
         15,
         5,
     ];
-} else {
-    $argv = [
-        ...array_filter($argv, function ($el) {
-            return is_numeric($el);
-        })
-    ];
 }
 
-$successRate = (float)$argv[0];
-$critRate = (float)$argv[1];
-$fumbleRate = (float)$argv[2];
+$successRate = $argv[0];
+$critRate = $argv[1];
+$fumbleRate = $argv[2];
 
 try {
     $gm = new GameMaster($successRate, $critRate, $fumbleRate);
