@@ -5,9 +5,6 @@ namespace App\JDR;
 require __DIR__ . '/Autoloader.php';
 Autoloader::register();
 
-use App\JDR\Class\De;
-use App\JDR\Class\Deck;
-use App\JDR\Class\Piece;
 use App\JDR\Class\GameMaster;
 use App\JDR\Class\Logger;
 use InvalidArgumentException;
@@ -33,15 +30,8 @@ $successRate = (float)$argv[0];
 $critRate = (float)$argv[1];
 $fumbleRate = (float)$argv[2];
 
-$dice4 = new De(4);
-$dice10 = new De(10);
-$deck1 = new Deck(3, 18);
-$deck2 = new Deck(4, 13);
-$coin = new Piece(1);
-
 try {
-    $elements = [$dice4, $dice10, $deck1, $deck2, $coin, $coin];
-    $gm = new GameMaster($elements, $successRate, $critRate, $fumbleRate);
+    $gm = new GameMaster($successRate, $critRate, $fumbleRate);
 
     $result = $gm->pleaseGiveMeACrit();
     echo "Résultat : " . $result->getType();
