@@ -2,18 +2,17 @@
 
 namespace App\JDR\Class;
 
-use App\JDR\Class\Abstract\AbstractGameMaster;
+use App\JDR\Class\Action;
 use InvalidArgumentException;
 
-class GameMaster extends AbstractGameMaster
+class GameMaster
 {
     public function __construct(
         private array $elements = [],
     ) {
-        parent::__construct();
     }
 
-    public function pleaseGiveMeACrit() {
+    public function pleaseGiveMeACrit(Action $action) {
         $element = $this->elements[array_rand($this->elements)];
         Logger::log($element);
         if($message = $element->isInvalid()){
@@ -21,6 +20,6 @@ class GameMaster extends AbstractGameMaster
         }
 
         $roll = (int)(100 * $element->lancer() / $element->getMax());
-        return $this->calculateResult($roll);
+        return $action->calculateResult($roll);
     }
 }

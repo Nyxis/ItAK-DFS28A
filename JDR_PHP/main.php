@@ -8,8 +8,10 @@ spl_autoload_register(new Autoloader(Autoloader::class));
 use App\JDR\Class\De;
 use App\JDR\Class\Deck;
 use App\JDR\Class\GameMaster;
+use App\JDR\Class\Action;
 use App\JDR\Class\Logger;
 use App\JDR\Class\Piece;
+use App\JDR\Enum\TypeEnum;
 use InvalidArgumentException;
 
 $argv = [
@@ -31,20 +33,20 @@ $gm = new GameMaster($elements);
 if (!count($argv) == 4) {
     Logger::log("Paramètres manquants, utilisation des valeurs par défaut");
     Logger::log("Utilisation avec les taux: php main.php <success_rate> <crit_rate> <fumble_rate>");
-} else {
-    $rates = [
-        'successRate' => (int)$argv[0],
-        'critRate' => (int)$argv[1],
-        'fumbleRate' => (int)$argv[2],
-    ];
 
-    $gm->setRates($rates);
+    $action = new Action();
+} else {
+    $action = new Action(
+        (int)$argv[0],
+        (int)$argv[1],
+        (int)$argv[2],
+    );
 }
 
 try {
-    $result = $gm->pleaseGiveMeACrit();
+    $result = $gm->pleaseGiveMeACrit($action);
     echo "Résultat : " . $result->getType();
-    return $result->getValue();
+    exit($result->getValue());
 } catch (InvalidArgumentException $th) {
     echo $th->getMessage();
 }

@@ -10,7 +10,7 @@ trait StringableTrait
 
         $properties = get_object_vars($this);
         foreach ($properties as $key => $value) {
-            $return .= '| ' . $key . ' => ' . $value . PHP_EOL;
+            $return .= '| ' . $key . ' : ' . $value . PHP_EOL;
         }
         $return .= '============================';
 

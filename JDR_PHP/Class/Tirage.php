@@ -8,7 +8,7 @@ class Tirage
 {
     public function __construct(
         private TypeEnum $type,
-        private float $value,
+        private int $value,
     ) {
 
     }
@@ -18,7 +18,7 @@ class Tirage
         return $this->type->value;
     }
 
-    public function getValue(): float
+    public function getValue(): int
     {
         return $this->value;
     }

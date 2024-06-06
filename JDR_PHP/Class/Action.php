@@ -1,12 +1,12 @@
 <?php
 
-namespace App\JDR\Class\Abstract;
+namespace App\JDR\Class;
 
 use App\JDR\Class\Logger;
 use App\JDR\Class\Tirage;
 use App\JDR\Enum\TypeEnum;
 
-abstract class AbstractGameMaster
+class Action
 {
     public function __construct(
         private int $successRate = 40,
@@ -15,25 +15,17 @@ abstract class AbstractGameMaster
     ) {
     }
 
-    public function setRates(array $rates) {
-        foreach ($rates as $property => $value) {
-            if(property_exists($this, $property)) {
-                $this->$property = $value;
-            }
-        }
-    }
-
-    protected function calculateResult($value) {
+    public function calculateResult($value) {
         Logger::log('Résultat du lancer : ' . $value);
 
         switch($value) {
             case $value <= $this->fumbleRate:
                 return new Tirage(TypeEnum::FUMBLE, $value);
                 break;
-            case $value <= $this->successRate:
+            case $value <= $this->fumbleRate + $this->critRate:
                 return new Tirage(TypeEnum::CRITICAL_SUCCESS, $value);
                 break;
-            case $value <= $this->critRate:
+            case $value <= $this->fumbleRate + $this->critRate + $this->successRate:
                 return new Tirage(TypeEnum::SUCCESS, $value);
                 break;
             default:
