@@ -8,6 +8,7 @@ class Tirage
 {
     public function __construct(
         private TypeEnum $type,
+        private float $value,
     ) {
 
     }
@@ -15,5 +16,10 @@ class Tirage
     public function getType(): string
     {
         return $this->type->value;
+    }
+
+    public function getValue(): float
+    {
+        return $this->value;
     }
 }

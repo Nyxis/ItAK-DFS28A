@@ -28,16 +28,16 @@ abstract class AbstractGameMaster
 
         switch($value) {
             case $value <= $this->fumbleRate:
-                return new Tirage(TypeEnum::FUMBLE);
+                return new Tirage(TypeEnum::FUMBLE, $value);
                 break;
             case $value <= $this->successRate:
-                return new Tirage(TypeEnum::CRITICAL_SUCCESS);
+                return new Tirage(TypeEnum::CRITICAL_SUCCESS, $value);
                 break;
             case $value <= $this->critRate:
-                return new Tirage(TypeEnum::SUCCESS);
+                return new Tirage(TypeEnum::SUCCESS, $value);
                 break;
             default:
-                return new Tirage(TypeEnum::FAILURE);
+                return new Tirage(TypeEnum::FAILURE, $value);
                 break;
         }
     }

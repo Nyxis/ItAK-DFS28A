@@ -44,6 +44,7 @@ if (!count($argv) == 4) {
 try {
     $result = $gm->pleaseGiveMeACrit();
     echo "Résultat : " . $result->getType();
+    return $result->getValue();
 } catch (InvalidArgumentException $th) {
     echo $th->getMessage();
 }

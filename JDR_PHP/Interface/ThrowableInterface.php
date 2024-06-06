@@ -2,7 +2,7 @@
 
 namespace App\JDR\Interface;
 
-interface MaterielInterface {
+interface ThrowableInterface {
     public function lancer();
     public function isInvalid();
     public function getMax();

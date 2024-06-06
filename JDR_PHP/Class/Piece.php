@@ -2,10 +2,10 @@
 
 namespace App\JDR\Class;
 
-use App\JDR\Interface\MaterielInterface;
+use App\JDR\Interface\ThrowableInterface;
 use App\JDR\Trait\StringableTrait;
 
-class Piece implements MaterielInterface
+class Piece implements ThrowableInterface
 {
     use StringableTrait;
     

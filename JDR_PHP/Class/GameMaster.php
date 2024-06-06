@@ -20,7 +20,7 @@ class GameMaster extends AbstractGameMaster
             throw new InvalidArgumentException($message);
         }
 
-        $roll = 100 * $element->lancer() / $element->getMax();
+        $roll = (int)(100 * $element->lancer() / $element->getMax());
         return $this->calculateResult($roll);
     }
 }
