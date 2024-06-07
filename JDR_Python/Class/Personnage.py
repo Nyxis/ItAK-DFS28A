@@ -1,4 +1,5 @@
 from .Stat import Stat
+from .StatType import StatType
 
 class Personnage:
     def __init__(self, base_stats, classe, equipements, base_modificateurs):
@@ -22,10 +23,9 @@ class Personnage:
     def get_stats(self):
         stats = []
         for stat in self.base_stats:
-            print(stat.type.name)
             modificateur = [mod for mod in self.modificateurs if mod.type.name == stat.type.name].pop()
             stats.append(
-                Stat(stat.type.name, stat.value + modificateur.value)
+                Stat(StatType(stat.type.name), stat.value + modificateur.value)
             )
 
         return stats
