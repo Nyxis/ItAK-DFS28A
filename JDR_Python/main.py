@@ -1,22 +1,13 @@
-# import subprocess
-
-# result = subprocess.run(["php", "JDR_PHP/main.php"], capture_output=True, text=True)
-
-# print(result.returncode)
-
 from Class.Personnage import Personnage
 from Class.Stat import Stat
 from Class.Taux import Taux
 from Class.TauxModificateur import TauxModificateur
-from Class.StatType import StatType
+from Class.StatType import StatType, force, rapidite, intelligence, vitalite, critique, fumble, echec, succes
 from Class.Classe import Classe
 from Class.Equipement import Equipement
 from Class.Rencontre import Rencontre
-
-force = StatType('Force')
-rapidite = StatType('Rapidité')
-intelligence = StatType('Intelligence')
-vitalite = StatType('Vitalité')
+from Class.GameMaster import GameMaster
+from Class.Scenario import Scenario
 
 # equipement
 
@@ -66,26 +57,16 @@ p1 = Personnage(p1_base_stats, p1_classe, [epee], p1_modificateurs)
 
 # rencontre
 
-fumble = StatType('Fumble')
-critique = StatType('Critique')
-succes = StatType('Succes')
-echec = StatType('Echec')
-
 r1 = Rencontre(
-    'Rencontre!',
-    [
-        Taux(fumble, 5),
-        Taux(critique, 15),
-        Taux(succes, 40),
-        Taux(echec, 40),
-    ],
-    [
-        TauxModificateur(Taux(critique, 5), echec, force, 10, 'gte'),
-        TauxModificateur(Taux(fumble, 5), succes, rapidite, 5, 'gte'),
-    ],
+    'Rencontre 1',
+    [Taux(fumble, 5), Taux(critique, 15), Taux(succes, 40), Taux(echec, 40)],
+    [TauxModificateur(Taux(critique, 5), echec, force, 10, 'gte'), TauxModificateur(Taux(fumble, 5), succes, rapidite, 5, 'gte')],
     5,
     bouclier
 )
 
-print(r1.calculate_rates(p1))
+gm = GameMaster(40, 15, 5)
 
+scenario = Scenario([r1])
+
+print(scenario.lancer(p1, gm))

@@ -24,7 +24,7 @@ class De implements ThrowableInterface
 
     public function isInvalid(){
         if($this->faces < 1) {
-            return "Un dé doit avoir au moins 1 face";
+            return "Un de doit avoir au moins 1 face";
         }
         return false;
     }

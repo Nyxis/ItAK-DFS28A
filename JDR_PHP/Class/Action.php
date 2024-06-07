@@ -16,7 +16,7 @@ class Action
     }
 
     public function calculateResult($value) {
-        Logger::log('Résultat du lancer : ' . $value);
+        Logger::log('Resultat du lancer : ' . $value);
 
         switch($value) {
             case $value <= $this->fumbleRate:

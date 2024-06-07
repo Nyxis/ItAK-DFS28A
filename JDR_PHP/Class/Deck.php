@@ -27,7 +27,7 @@ class Deck implements ThrowableInterface
 
     public function isInvalid(){
         if($this->couleurs < 1 || $this->valeurs < 1) {
-            return "Le nombre de couleur et la valeur doivent être supérieurs ou égaux à 1";
+            return "Le nombre de couleur et la valeur doivent être superieurs ou egaux à 1";
         }
         return false;
     }

@@ -11,7 +11,6 @@ use App\JDR\Class\GameMaster;
 use App\JDR\Class\Action;
 use App\JDR\Class\Logger;
 use App\JDR\Class\Piece;
-use App\JDR\Enum\TypeEnum;
 use InvalidArgumentException;
 
 $argv = [
@@ -31,7 +30,7 @@ $elements = [
 $gm = new GameMaster($elements);
 
 if (!count($argv) == 4) {
-    Logger::log("Paramètres manquants, utilisation des valeurs par défaut");
+    Logger::log("Paramètres manquants, utilisation des valeurs par defaut");
     Logger::log("Utilisation avec les taux: php main.php <success_rate> <crit_rate> <fumble_rate>");
 
     $action = new Action();
@@ -45,7 +44,7 @@ if (!count($argv) == 4) {
 
 try {
     $result = $gm->pleaseGiveMeACrit($action);
-    echo "Résultat : " . $result->getType();
+    echo "Resultat : " . $result->getType();
     exit($result->getValue());
 } catch (InvalidArgumentException $th) {
     echo $th->getMessage();

@@ -31,7 +31,7 @@ class Piece implements ThrowableInterface
 
     public function isInvalid(){
         if($this->nbLancers < 1) {
-            return "Le nombre de lancer doit être supérieur ou égal à 1";
+            return "Le nombre de lancer doit etre superieur ou egal a 1";
         }
         return false;
     }
