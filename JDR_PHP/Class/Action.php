@@ -18,18 +18,22 @@ class Action
     public function calculateResult($value) {
         Logger::log('Resultat du lancer : ' . $value);
 
+        $failRate = 100 - $this->fumbleRate - $this->critRate - $this->successRate;
+
+        // var_dump($failRate + $this->fumbleRate + $this->critRate + $this->successRate);die;
+
         switch($value) {
-            case $value <= $this->fumbleRate:
+            case $value <= $failRate:
+                return new Tirage(TypeEnum::FAILURE, $value);
+                break;
+            case $value > $failRate && $value <= $failRate + $this->fumbleRate:
                 return new Tirage(TypeEnum::FUMBLE, $value);
                 break;
-            case $value <= $this->fumbleRate + $this->critRate:
+            case $value > $failRate + $this->fumbleRate && $value <= $failRate + $this->fumbleRate + $this->critRate:
                 return new Tirage(TypeEnum::CRITICAL_SUCCESS, $value);
                 break;
-            case $value <= $this->fumbleRate + $this->critRate + $this->successRate:
+            case $value > $failRate + $this->fumbleRate + $this->critRate && $value <= $failRate + $this->fumbleRate + $this->critRate + $this->successRate:
                 return new Tirage(TypeEnum::SUCCESS, $value);
-                break;
-            default:
-                return new Tirage(TypeEnum::FAILURE, $value);
                 break;
         }
     }

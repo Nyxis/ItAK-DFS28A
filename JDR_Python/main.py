@@ -44,16 +44,9 @@ p1_base_stats = [
     Stat(vitalite, 5),
 ]
 
-p1_modificateurs = [
-    Stat(force, 0),
-    Stat(rapidite, 0),
-    Stat(intelligence, 0),
-    Stat(vitalite, 0),
-]
-
 # personnage
 
-p1 = Personnage(p1_base_stats, p1_classe, [epee], p1_modificateurs)
+p1 = Personnage('Tristan', p1_base_stats, p1_classe, [epee])
 
 # rencontre
 

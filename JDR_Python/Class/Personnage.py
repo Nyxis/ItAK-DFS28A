@@ -1,14 +1,22 @@
 from .Stat import Stat
-from .StatType import StatType
+from .StatType import StatType, force, rapidite, intelligence, vitalite
 
 class Personnage:
-    def __init__(self, base_stats, classe, equipements, base_modificateurs):
+    def __init__(self, name, base_stats, classe, equipements):
+        self.name = name
         self.base_stats = base_stats
         self.classe = classe
         self.equipements = equipements
-        self.modificateurs = self.calculate_modifiers(base_modificateurs)
+        self.modificateurs = self.calculate_modifiers()
 
-    def calculate_modifiers(self, modificateurs):
+    def calculate_modifiers(self):
+        modificateurs = [
+            Stat(force, 0),
+            Stat(rapidite, 0),
+            Stat(intelligence, 0),
+            Stat(vitalite, 0),
+        ]
+
         for stat in self.classe.stats:
             modificateur = [mod for mod in modificateurs if mod.type.name == stat.type.name].pop()
             modificateur.increaseStat(stat.value)
