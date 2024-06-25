@@ -9,6 +9,7 @@ Chaque devoir à rendre devra se faire sur ce dépôt en utilisant une pull-requ
 ## Sommaire des exercices
 
   - [POO - Php - Python](POO_Php_Python/README.md)
+  - [Php - Design Patterns](Php_DesignPattern/README.md)
 
 ## Déposer son travail
 
