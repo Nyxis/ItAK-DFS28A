@@ -1,4 +1,4 @@
-# Programmation orientée objet - Php/Python
+# D6 - Programmation orientée objet - Php/Python
 
 Dans le but d'animer une soirée de JdR, un Game Master emmène un ensemble de matériel pour gérer les tirages aléatoires conséquents aux choix des joueurs.
 
