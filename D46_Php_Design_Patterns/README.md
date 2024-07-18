@@ -1,4 +1,4 @@
-# Php / Design Pattern
+# D46 - Php / Design Pattern
 
 
 ## Design Pattern Adapter
@@ -27,7 +27,7 @@ class ProductRepository
 {
     public function save(Product $product)
     {
-        // convert Product to proper persistance format
+        // convert Product to proper persistence format
     }
 }
 
