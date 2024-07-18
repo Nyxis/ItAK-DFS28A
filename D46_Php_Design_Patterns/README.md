@@ -1,9 +1,36 @@
 # D46 - Php / Design Pattern
 
+## Principes SOLID
+
+Les principes SOLID ont pour but de minimiser la variance des fonctions dans des objets et l'impact du contexte sur l'exécution des fonction d'un objet.
+
+Voici la liste :
+ - Single Responsability Principle
+ - Open Closed Principle
+ - Liskov Substitution Principle
+ - Interface Seggregation Principle
+ - Dependency Inversion Principle
+
+Expliquez en quoi consiste chacun en une phrase.
+
+## Anti patterns STUPID
+
+L'accronyme STUPID liste des pratiques contestables dans le développement informatique du point de vue de la clarté du code et de la maintenabilité de l'application en général.
+
+Les voici :
+ - Singleton
+ - Tight Coupling
+ - Untestability
+ - Premature Optimization
+ - Indescriptive Naming
+ - Duplication
+
+Expliquez chacun en une phrase et donnez un exemple de code en Php.
 
 ## Design Pattern Adapter
 
-Un pattern Adapter permet de faire travailler ensemble des objets qui ont des responsabilités similaires ou connexes, dont les prototypes ne sont pas compatibles.
+Le pattern Adapter permet de faire travailler ensemble des objets qui ont des responsabilités similaires ou connexes, dont les prototypes ne sont pas compatibles.
+Il permet de ne pas lier fortement des classes entre elles mais simplement à leurs comportements. Ainsi, quand un comportement doit évoluer, il n'y a pas de risques d'incompatibilité avec le reste de l'application.
 
 Mise en place :
   - Identifier le comportement à adapter / à connecter
@@ -17,25 +44,46 @@ Voici les classes suivantes :
 
 class Product
 {
-    public int $id;
-    public string $designation;
-    public string $univers;
-    public int $price;
+    public function __construct(
+        public ?int $id,
+        public string $designation,
+        public string $univers,
+        public int $price
+    ){
+    }
 }
 
 class ProductRepository
 {
+    public function __construct(
+        protected /* ??? */ $persistence
+    ) {
+    }
+
     public function save(Product $product)
     {
-        // convert Product to proper persistence format
+        $persistence->persist(
+            // all arguments needed to proper persist a Product
+        );
     }
 }
 
 class Database
 {
-    public function sqlQuery(string $sqlQuery, \PDO $connexion)
+    protected \PDO $connection;
+
+    /**
+     * @param string $dsn database connection DSN
+     * @example new Database('mysql://root:@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4')
+     */
+    public function __construct(string $dsn)
     {
-        $stmt = $connexion->createStatement($sqlQuery);
+        $this->connection = new \PDO($dsn);
+    }
+
+    public function sqlQuery(string $sqlQuery)
+    {
+        $stmt = $this->connection->createStatement($sqlQuery);
         $stmt->execute();
     }
 }
@@ -51,6 +99,36 @@ Pour tous ces exercices, veillez à respecter les principes SOLID.
 
 _Tips : ```json_encode()``` / ```file_put_contents()```_
 
+_Exemple de fichier main.php :_
+```php
+$product = new Product(
+    univers: 'Weapon',
+    designation: 'FkingBigSword',
+    price: 1200
+);
 
-## Design Pattern State Machine
+$productRepository = new ProductRepository(
+    new /* ...... */(
+        Product::class,
+        'id',
+        new Database(/* .... */)
+    )
+);
 
+$productRepository->save($product);
+```
+
+## Au choix
+
+Choisissez l'un des design pattern suivants et implémentez le en Php, en suivant un cas réel :
+ - Composite
+ - Prototype
+ - Visitor
+ - Proxy
+ - Decorator
+ - Strategy
+ - Builder
+ - Event Dispatcher
+ - Decorator
+ - Observer
+ - State Machine
