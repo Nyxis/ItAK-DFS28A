@@ -7,3 +7,8 @@ controllers:
 hello_world_index:
     path: /hello_world
     controller: App\Controller\HelloWorldController::__invoke
+
+products:
+    resource: './routes/custom/products.yaml'
+    prefix: /products
+    name_prefix: products_

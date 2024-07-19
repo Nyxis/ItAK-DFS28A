@@ -22,6 +22,7 @@ class DatabasePersistence implements PersistenceInterface
         $entityArray = [];
         foreach ($properties as $property => $value) {
             $value = $pa->getValue($entity, $property);
+            
             if ($value instanceof EntityInterface) {
                 $entityArray[] = $value->getId();
                 continue;
@@ -47,6 +48,62 @@ class DatabasePersistence implements PersistenceInterface
             implode(',', $entityArray)
         );
 
-        return $this->database->sqlQuery($sqlQuery);
+        return $this->database->sqlQuery($sqlQuery)->rowCount();
+    }
+
+    public function delete(string $tableName, string $class, int $id): bool
+    {
+        $sqlQuery = sprintf(
+            "DELETE FROM %s e WHERE e.id = %s",
+            $tableName,
+            $id
+        );
+
+        $deleted = $this->database->sqlQuery($sqlQuery)->rowCount();
+
+        return $deleted;
+    }
+
+    public function getById(string $tableName, string $class, int $id): EntityInterface|null
+    {
+        $sqlQuery = sprintf(
+            "SELECT * FROM %s e WHERE e.id = %s",
+            $tableName,
+            $id
+        );
+
+        $fetchedEntity = $this->database->sqlQuery($sqlQuery)->fetch();
+        if (empty($fetchedEntity)) {
+            return null;
+        }
+
+        $entity = new $class();
+        $entity->fromArray($fetchedEntity);
+        
+        return $entity;
+    }
+
+    public function getAll(string $tableName, string $class): array
+    {
+        $entities = [];
+
+        $sqlQuery = sprintf(
+            "SELECT * FROM %s",
+            $tableName,
+        );
+
+        $iterator = $this->database->sqlQuery($sqlQuery)->getIterator();
+        while($iterator->valid()){
+            $entity = $iterator->current();
+            
+            $newEntity = new $class();
+            $newEntity->fromArray($entity);
+
+            $entities[] = $newEntity;
+
+            $entity = $iterator->next();
+        }
+
+        return $entities;
     }
 }

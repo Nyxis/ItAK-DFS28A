@@ -19,6 +19,7 @@ class Database
     public function sqlQuery(string $sqlQuery)
     {
         $stmt = $this->connexion->prepare($sqlQuery);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt;
     }
 }
