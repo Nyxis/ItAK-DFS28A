@@ -5,35 +5,39 @@ namespace App\Persistence;
 use App\Adapter\Database;
 use App\Interface\EntityInterface;
 use App\Interface\PersistenceInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class DatabasePersistence implements PersistenceInterface
 {
-    public function __construct(private Database $database)
-    {
-        $this->database = $database;
+    public function __construct(
+        private Database $database
+    ) {
     }
 
     public function saveSingle(string $tableName, EntityInterface $entity): int|bool
     {
+        $pa = new PropertyAccessor();
+
         $properties = get_class_vars($entity::class);
         $entityArray = [];
         foreach ($properties as $property => $value) {
-            if ($entity->$property instanceof EntityInterface) {
-                $entityArray[] = $entity->$property->id;
+            $value = $pa->getValue($entity, $property);
+            if ($value instanceof EntityInterface) {
+                $entityArray[] = $value->getId();
                 continue;
-            } else if (is_array($entity->$property)) {
+            } else if (is_array($value)) {
                 $entityArray[] = '"' . json_encode(
                     array_map(function($obj) {
                         if ($obj instanceof EntityInterface) {
                             return $obj->id;
                         }
                         return $obj;
-                    }, $entity->$property)
+                    }, $value)
                 ) . '"';
                 continue;
             }
             
-            $entityArray[] = $entity->$property ? '"' . $entity->$property . '"': 'null';
+            $entityArray[] = $value ? '"' . $value . '"': 'null';
         }
 
         $sqlQuery = sprintf(

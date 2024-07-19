@@ -4,6 +4,7 @@ namespace App\Persistence;
 
 use App\Interface\EntityInterface;
 use App\Interface\PersistenceInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class FilePersistence implements PersistenceInterface
 {
@@ -22,24 +23,27 @@ class FilePersistence implements PersistenceInterface
         $data = json_decode(file_get_contents($this->projectDir . $filePath), true);
         $lastEntity = end($data);
 
+        $pa = new PropertyAccessor();
+        
         $properties = get_class_vars($entity::class);
         $entityArray = [];
         foreach ($properties as $property => $value) {
+            $value = $pa->getValue($entity, $property);
             if($property == 'id'){
                 $entityArray[$property] = ($lastEntity[$property] ?? 0) + 1;
                 continue;
-            } else if ($entity->$property instanceof EntityInterface) {
-                $entityArray[$property] = $entity->$property->id;
-            } else if (is_array($entity->$property)) {
+            } else if ($value instanceof EntityInterface) {
+                $entityArray[$property] = $value->id;
+            } else if (is_array($value)) {
                 $entityArray[$property] = array_map(function($obj) {
                     if ($obj instanceof EntityInterface) {
                         return $obj->id;
                     }
                     return $obj;
-                }, $entity->$property);
+                }, $value);
             }
             
-            $entityArray[$property] = $entity->$property;
+            $entityArray[$property] = $value;
         }
 
         $data[] = $entityArray;

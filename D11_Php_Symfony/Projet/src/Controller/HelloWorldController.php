@@ -17,9 +17,9 @@ class HelloWorldController extends AbstractController
     ): Response
     {
         $product = new Product();
-        $product->designation = "Example Product";
-        $product->univers = "Electronics";
-        $product->price = 999;
+        $product->setDesignation("Example Product");
+        $product->setUnivers("Electronics");
+        $product->setPrice(999);
 
         $productRepository = new ProductRepository($databasePersistence);
         $dbSave = $productRepository->save($product);
