@@ -53,31 +53,6 @@ echo $preferences->get('language');
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Tight Coupling :
-# Les classes trop dépendantes les unes des autres rendent les changements et les test difficiles. 
-
-class NotificationService {
-    private $emailSender;
-
-    public function __construct(EmailSender $emailSender) {}
-}
-
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Untestability : 
-# Le code est difficile à tester en raison de dépendances directes sur des services externes ou de couplage fort.
-
-
-
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Premature Optimization : 
-# Optimiser le code trop tôt peut rendre le code complexe et difficile à maintenir. 
-
-
-
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 # Indescriptive Naming : 
 # Les noms peu descriptifs rendent le code difficile à comprendre et à maintenir. 
 
