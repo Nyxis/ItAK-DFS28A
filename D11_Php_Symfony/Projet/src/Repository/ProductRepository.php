@@ -17,6 +17,11 @@ class ProductRepository
         return $this->persistence->saveSingle(Product::TABLE_NAME, $product);
     }
 
+    public function update(Product $product): int|bool
+    {
+        return $this->persistence->updateSingle(Product::TABLE_NAME, $product);
+    }
+
     public function getById(int $id): Product|null
     {
         return $this->persistence->getById(Product::TABLE_NAME, Product::class, $id);

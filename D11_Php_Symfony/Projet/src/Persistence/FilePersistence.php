@@ -54,6 +54,37 @@ class FilePersistence implements PersistenceInterface
         return file_put_contents($this->projectDir . $filePath . $entityArray['id'] . '.json', $dataEncoded . PHP_EOL);
     }
 
+    public function updateSingle(string $tableName, EntityInterface $entity): int|bool
+    {
+        $filePath = str_replace('__tablename__', $tableName, $this->filePath);
+
+        $pa = new PropertyAccessor();
+        $properties = get_class_vars($entity::class);
+
+        $entityArray = [];
+        $entityArray['id'] = $entity->getId();
+        foreach ($properties as $property => $value) {
+            $value = $pa->getValue($entity, $property);
+
+            if ($value instanceof EntityInterface) {
+                $entityArray[$property] = $value->id;
+            } else if (is_array($value)) {
+                $entityArray[$property] = array_map(function($obj) {
+                    if ($obj instanceof EntityInterface) {
+                        return $obj->id;
+                    }
+                    return $obj;
+                }, $value);
+            }
+            
+            $entityArray[$property] = $value;
+        }
+
+        $dataEncoded = json_encode($entityArray);
+
+        return file_put_contents($this->projectDir . $filePath . $entityArray['id'] . '.json', $dataEncoded . PHP_EOL);
+    }
+
     public function delete(string $tableName, string $class, int $id): bool
     {
         $filePath = str_replace('__tablename__', $tableName, $this->filePath);

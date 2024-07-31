@@ -12,6 +12,6 @@ edit:
     controller: App\Controller\ProductController::edit
     
 delete:
-    path: /{id}
-    methods: [DELETE]
+    path: /{id}/delete
+    methods: [POST, DELETE]
     controller: App\Controller\ProductController::delete

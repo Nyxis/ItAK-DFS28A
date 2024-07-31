@@ -1,0 +1,20 @@
+.toast[role="alert"] {
+    position: absolute!important;
+    bottom: 10px!important;
+    right: 10px!important;
+}
+
+.hide-toast {
+    animation-duration: 1s;
+    animation-name: hide-opacity;
+}
+
+@keyframes hide-opacity {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

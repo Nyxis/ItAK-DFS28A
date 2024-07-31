@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use App\Form\ProductType;
 use App\Persistence\DatabasePersistence;
-use App\Persistence\FilePersistence;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends AbstractController
 {
     public function __invoke(
-        DatabasePersistence $databasePersistence,
-        ): Response
+        ProductRepository $productRepository
+    ): Response
     {
-        $productRepository = new ProductRepository($databasePersistence);
         $products = $productRepository->getAll();
 
         return $this->render('product/index.html.twig', [
@@ -23,23 +25,39 @@ class ProductController extends AbstractController
     }
 
     public function new(
-        DatabasePersistence $databasePersistence,
+        ProductRepository $productRepository,
+        Request $request
     ): Response
     {
-        $productRepository = new ProductRepository($databasePersistence);
-        $products = $productRepository->getAll();
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
 
-        return $this->render('product/index.html.twig', [
-            'products' => $products,
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $product->designation = $data->designation;
+            $product->univers = $data->univers;
+            $product->price = $data->price;
+
+            $productRepository->save($product);
+
+            $this->addFlash('success', 'Le produit à bien été ajouté!');
+
+            return $this->redirectToRoute('products_index');
+        }
+
+        return $this->render('product/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
     
     public function edit(
         int $id,
-        DatabasePersistence $databasePersistence,
+        ProductRepository $productRepository,
+        Request $request
     ): Response
     {
-        $productRepository = new ProductRepository($databasePersistence);
         $product = $productRepository->getById($id);
 
         if (empty($product)) {
@@ -47,17 +65,31 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('products_index');
         }
 
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $product->designation = $data->designation;
+            $product->univers = $data->univers;
+            $product->price = $data->price;
+
+            $productRepository->update($product);
+
+            $this->addFlash('success', 'Le produit à bien été modifié!');
+
+            return $this->redirectToRoute('products_index');
+        }
+
         return $this->render('product/edit.html.twig', [
-            'product' => $product,
+            'form' => $form->createView(),
         ]);
     }
 
     public function delete(
         int $id,
-        DatabasePersistence $databasePersistence,
+        ProductRepository $productRepository,
     ): Response
     {
-        $productRepository = new ProductRepository($databasePersistence);
         $deleted = $productRepository->delete($id);
 
         if ($deleted) {
