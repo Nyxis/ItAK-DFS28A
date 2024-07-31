@@ -3,17 +3,20 @@
 namespace App\Entity;
 
 class Product {
-    private $name;
+    const TABLE_NAME = 'oskour';
 
-    public function getName(): ?string{
-        return $this->name;
+    private ?int $id = null;
+    public string $designation;
+    public string $univers;
+    public int $price;
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
-    public function setName(string $name) : self {
-        $this->name = $name;
 
-        return $this;
-    }
+
 }
 
 ?>

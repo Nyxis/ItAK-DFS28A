@@ -3,3 +3,17 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+
+hello_world:
+    path: /hello_world
+    controller: App\Controller\HelloWorldController::helloThere
+
+app_home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+
+product:
+    path: /product
+    controller: App\Controller\ProductController::indexProduct
