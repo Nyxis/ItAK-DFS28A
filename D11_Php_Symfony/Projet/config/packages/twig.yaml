@@ -1,0 +1,8 @@
+twig:
+    file_name_pattern: '*.twig'
+    globals:
+        definedPrice: '%defined_price%'
+
+when@test:
+    twig:
+        strict_variables: true

@@ -1,0 +1,17 @@
+index:
+    path: /
+    controller: App\Controller\ProductController::__invoke
+
+new:
+    path: /new
+    controller: App\Controller\ProductController::new
+    
+edit:
+    path: /{id}
+    methods: [GET, POST]
+    controller: App\Controller\ProductController::edit
+    
+delete:
+    path: /{id}/delete
+    methods: [POST, DELETE]
+    controller: App\Controller\ProductController::delete
